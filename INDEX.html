@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1>Ethereum Balance Checker</h1>
+  <form method="POST" action="{% url 'fetch_balance' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="address">Ethereum Address:</label>
+      <input type="text" class="form-control" id="address" name="address" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Fetch</button>
+  </form>
+
+  {% if balance %}
+  <div class="mt-5">
+    <h2>Current Balance: {{ balance }}</h2>
+    {% if transactions %}
+    <h2>Recent Transactions:</h2>
+    <ul>
+      {% for transaction in transactions %}
+      <li>{{ transaction }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
